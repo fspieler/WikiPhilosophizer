@@ -15,6 +15,6 @@ The main scripts:
 
 * WikiCrawler.py: Find if a path exists from a given, or if not provided, random starting page to a target wiki page, or, if not provided, /wiki/Philosophy. Optimized to cache web pages to avoid traversing previously traversed paths.
 
-* FindPopularArticles.py: For a given language, start from various random starting points and see what pages are the most popular.
+* FindPopularArticles.py: For a given language, start from various random starting points and see what pages are the most popular. Could be optimized to recognize previously traversed loops.
 
 * multilang-\*: Generate results
