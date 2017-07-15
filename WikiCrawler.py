@@ -242,51 +242,6 @@ class WikiCrawler(object):
             self.appendToCache(pathPages, success)
         return success
 
-    def crawlFromNew(self,start):
-        '''
-        This method is the complicated bit...
-        '''
-
-        if type(start) is str: # convert relative link to (title, first_link)
-            start = self.getPage(start)
-
-        '''
-        pathPages is the set of all pages visited during this crawl
-
-        We will use it to calculate whether there is a cycle on the current crawl.
-
-        If caching is enabled, we will also put these pages to cache once we know whether
-        they connect to target.
-        '''
-        pathPages = set() 
-        title, first_link = start
-        print "Starting page: " + title
-        success = None
-        while True: 
-            sys.stdout.flush()
-            if first_link is None:
-                success = False
-                print "No links found!"
-                break
-            if first_link in pathPages:
-                success = False
-                print "Cycle found (already visited " + first_link+")"
-                break
-            pathPages.add(first_link)
-            if first_link == self.target:
-                success = True
-                break
-            if self.enableCache and first_link in self.cache:
-                success = self.cache[first_link]
-                print "Found " + str(first_link) + " in cache!"
-                break
-            title, first_link = self.getPage(first_link)
-            print "Next page:", title
-        print ("Reached " if success else "Failed to reach " ) + "target "+self.target_title
-        if self.enableCache:
-            self.appendToCache(pathPages, success)
-        return success
-
 if __name__ == "__main__":
     arguments = docopt(__doc__, version="wikiCrawler 0.1")
     crawler = WikiCrawler(
